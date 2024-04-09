@@ -13,9 +13,10 @@ First video that I created before midnight. Project was not working fully.
 
 https://youtu.be/dE-pEBqwhZs
 
+Login for testing:
 
-
-
+username: stefan
+pass: 123456
 
 
 
