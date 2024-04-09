@@ -35,15 +35,34 @@ export class AddUpdateEmployeeComponent implements OnInit {
       salary: [null, [Validators.required, Validators.min(0)]]
     });
   }
+  fetchEmployeeDetails(id: string): void {
+    this.apollo.watchQuery({
+      query: EmployeeQueries.GET_EMPLOYEE_BY_ID,
+      variables: { _id: id },
+    }).valueChanges.subscribe((result: any) => {
+      if (result.data && result.data.getEmployeeByID) {
+        this.employeeForm.patchValue(result.data.getEmployeeByID);
+      }
+    });
+  }
 
   ngOnInit(): void {
-    this.route.data.subscribe(data => {
-
+    this.route.params.subscribe((params: { [x: string]: any; }) => {
+      const id = params['id']; 
+      if (id) {
+        this.isUpdate = true;
+        this.employeeId = id;
+        this.fetchEmployeeDetails(id);
+      }
     });
   }
 
   backToHome(): void {
     this.router.navigate(['/']);
+  }
+
+  backToEmployees(): void {
+    this.router.navigate(['/employees']);
   }
 
   isLoggedIn(): boolean {

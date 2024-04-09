@@ -1,8 +1,9 @@
-<!-- <div *ngIf="authService.isLoggedIn(); else loginPrompt"> -->
-<div>
+<div *ngIf="authService.isLoggedIn(); else loginPrompt">
+<!-- <div> -->
 
   <div class="nav-buttons">
     <button class="home-button" (click)="backToHome()">Back to Home</button>
+    <button class="employees-button" (click)="backToEmployees()">Back to Employee List</button>
     <button class="logout-button" (click)="logout()">Logout</button>
   </div>
 

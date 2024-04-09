@@ -3,8 +3,8 @@ import { Apollo, gql } from 'apollo-angular';
 import { tap } from 'rxjs/operators';
 
 const LOGIN_USER = gql`
-  mutation Login($_id: String!, $password: String!) {
-    userLogin(_id: $_id, password: $password) {
+  query Login($id: String!, $password: String!) {
+    userLogin(_id: $id, password: $password) {
       _id
       email
       token
@@ -19,10 +19,10 @@ export class AuthService {
   constructor(private apollo: Apollo) {}
 
   login(id: string, password: string) {
-    return this.apollo.mutate({
-      mutation: LOGIN_USER,
+    return this.apollo.query({
+      query: LOGIN_USER,
       variables: {
-        _id: id,
+        id,
         password,
       },
     }).pipe(

@@ -13,6 +13,20 @@ query GetEmployees {
 }
 `;
 
+const GET_EMPLOYEE_BY_ID = gql`
+query GetEmployeeByID($_id: ID!) {
+  getEmployeeByID(_id: $_id) {
+    _id
+    first_name
+    last_name
+    email
+    gender
+    salary
+  }
+}
+`;
+
+
 const CREATE_EMPLOYEE = gql`
   mutation CreateEmployee($first_name: String!, $last_name: String!, $email: String!, $gender: String!, $salary: Float!) {
     createEmployee(first_name: $first_name, last_name: $last_name, email: $email, gender: $gender, salary: $salary) {
@@ -46,4 +60,4 @@ const DELETE_EMPLOYEE = gql`
   }
 `;
 
-export {GET_EMPLOYEES, CREATE_EMPLOYEE, UPDATE_EMPLOYEE, DELETE_EMPLOYEE}
+export {GET_EMPLOYEES, CREATE_EMPLOYEE, UPDATE_EMPLOYEE, DELETE_EMPLOYEE, GET_EMPLOYEE_BY_ID}
