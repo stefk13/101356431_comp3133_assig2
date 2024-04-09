@@ -1,1 +1,25 @@
-<p>login works!</p>
+<div class="login-container">
+
+    <button class="back-button" (click)="backToHome()">Back</button>
+    <h2>Login</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <div class="form">
+        <label for="id">Username</label>
+        <input type="text" id="id" formControlName="id" class="form-input">
+        <div *ngIf="loginForm.get('id')?.invalid && loginForm.get('id')?.touched" class="text-danger">
+          Username is required.
+        </div>
+      </div>
+  
+      <div class="form">
+        <label for="password">Password</label>
+        <input type="password" id="password" formControlName="password" class="form-input">
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-danger">
+          Password is required.
+        </div>
+      </div>
+  
+      <button type="submit" class="submit-button" [disabled]="!loginForm.valid">Submit</button>
+    </form>
+
+</div>

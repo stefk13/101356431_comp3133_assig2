@@ -2,7 +2,8 @@
 
     <h2>Employee List</h2>
 
-    <div *ngIf="authService.isLoggedIn(); else loginPrompt">
+    <!-- <div *ngIf="authService.isLoggedIn(); else loginPrompt"> -->
+        <div>
         <div>
             <button class="add-emp-button" routerLink="/employee/add">Add Employee</button>
         </div>
@@ -35,9 +36,9 @@
 
 
 <ng-template #loginPrompt>
-    <div class="alert alert-warning" role="alert">
+    <div class="alert" role="alert">
         Login to gain access.
     </div>
-    <button class="btn btn-primary" routerLink="/login">Login</button>
-    <button class="btn btn-secondary" routerLink="/register">Register</button>
+    <button class="to-login-button" routerLink="/login">Login</button>
+    <button class="to-register-button" routerLink="/register">Register</button>
 </ng-template>

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { AuthService } from '../auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import * as EmployeeQueries from '../qraphql.queries/graphql.employee.queries';
 
 @Component({
@@ -9,14 +10,14 @@ import * as EmployeeQueries from '../qraphql.queries/graphql.employee.queries';
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.css'],
   standalone: true,
-  imports: [],
+  imports: [RouterModule, CommonModule],
 })
 export class EmployeeComponent implements OnInit {
   employees: any[] = [];
 
   constructor(private apollo: Apollo, 
-              private authService: AuthService, 
-              private router: Router,) {}
+              public authService: AuthService, 
+              public router: Router,) {}
 
   isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
@@ -24,6 +25,10 @@ export class EmployeeComponent implements OnInit {
 
   logout(): void {
     this.authService.logout();
+    this.router.navigate(['/']);
+  }
+
+  backToHome() {
     this.router.navigate(['/']);
   }
 
@@ -35,16 +40,27 @@ export class EmployeeComponent implements OnInit {
     this.apollo.watchQuery({
       query: EmployeeQueries.GET_EMPLOYEES,
     }).valueChanges.subscribe((result: any) => {
+      console.log("Loaded employees:", result?.data?.getEmployees);
       this.employees = result?.data?.getEmployees;
     });
   }
 
   deleteEmployee(id: string) {
+
+    console.log("Attempting to delete employee with ID:", id);
+    console.log("Variables passed:", { _id: id });
     this.apollo.mutate({
       mutation: EmployeeQueries.DELETE_EMPLOYEE,
-      variables: { id }
-    }).subscribe(() => {
-      this.getEmployees(); 
+      variables: { _id: id } 
+    }).subscribe({
+      next: (response) => {
+        console.log("Employee deleted successfully. Response:", response);
+        this.getEmployees();
+      },
+      error: (error) => {
+        console.error("Error deleting employee. Error details:", error);
+        console.error("Failed ID:", id); 
+      }
     });
   }
 

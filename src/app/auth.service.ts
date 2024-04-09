@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 import { tap } from 'rxjs/operators';
 
-const LOGIN_MUTATION = gql`
-  mutation Login($id: String!, $password: String!) {
-    userLogin(_id: $id, password: $password) {
+const LOGIN_USER = gql`
+  mutation Login($_id: String!, $password: String!) {
+    userLogin(_id: $_id, password: $password) {
       _id
       email
       token
@@ -20,9 +20,9 @@ export class AuthService {
 
   login(id: string, password: string) {
     return this.apollo.mutate({
-      mutation: LOGIN_MUTATION,
+      mutation: LOGIN_USER,
       variables: {
-        id,
+        _id: id,
         password,
       },
     }).pipe(

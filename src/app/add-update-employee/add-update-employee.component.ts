@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators,ReactiveFormsModule } from '@angular/forms';
 import { Apollo } from 'apollo-angular';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth.service';
 import * as EmployeeQueries from '../qraphql.queries/graphql.employee.queries';
 
@@ -11,7 +12,7 @@ import * as EmployeeQueries from '../qraphql.queries/graphql.employee.queries';
   templateUrl: './add-update-employee.component.html',
   styleUrls: ['./add-update-employee.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule], 
+  imports: [ReactiveFormsModule, RouterModule, CommonModule], 
 })
 export class AddUpdateEmployeeComponent implements OnInit {
   employeeForm: FormGroup; 
@@ -22,8 +23,8 @@ export class AddUpdateEmployeeComponent implements OnInit {
     private apollo: Apollo,
     private formBuilder: FormBuilder, 
     private route: ActivatedRoute,
-    private router: Router,
-    private authService: AuthService
+    public router: Router,
+    public authService: AuthService
   ) {
 
     this.employeeForm = this.formBuilder.group({
@@ -37,11 +38,7 @@ export class AddUpdateEmployeeComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.data.subscribe(data => {
-      if (data['employee']) {
-        this.isUpdate = true;
-        this.employeeId = data['employee']._id;
-        this.employeeForm.patchValue(data['employee']); 
-      }
+
     });
   }
 

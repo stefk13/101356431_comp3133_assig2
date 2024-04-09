@@ -1,1 +1,35 @@
-<p>register works!</p>
+<div class="register-container">
+
+  <button class="back-button" (click)="backToHome()">Back</button>
+
+  <h2>Register</h2>
+  
+  <form [formGroup]="registerForm" (ngSubmit)="register()">
+    <div class="form">
+      <label for="id">Username</label>
+      <input type="text" id="id" formControlName="id" class="form-input">
+      <div *ngIf="registerForm.get('id')?.invalid && registerForm.get('id')?.touched" class="text-danger">
+        Username is required (must be 4 characters or more).
+      </div>
+    </div>
+
+    <div class="form">
+      <label for="email">Email</label>
+      <input type="email" id="email" formControlName="email" class="form-input">
+      <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-danger">
+        A valid email is required.
+      </div>
+    </div>
+
+    <div class="form">
+      <label for="password">Password</label>
+      <input type="password" id="password" formControlName="password" class="form-input">
+      <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-danger">
+        Password is required (minimum 6 characters).
+      </div>
+    </div>
+
+    <button type="submit" class="submit-button" [disabled]="!registerForm.valid">Submit</button>
+  </form>
+
+</div>

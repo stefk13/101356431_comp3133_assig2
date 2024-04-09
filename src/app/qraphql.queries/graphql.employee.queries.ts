@@ -3,6 +3,7 @@ import { gql } from "apollo-angular"
 const GET_EMPLOYEES = gql `
 query GetEmployees {
   getEmployees {
+    _id
     first_name
     last_name
     email
@@ -37,8 +38,8 @@ const UPDATE_EMPLOYEE = gql`
 `;
 
 const DELETE_EMPLOYEE = gql`
-  mutation DeleteEmployee($id: ID!) {
-    deleteEmployeeByID(_id: $id) {
+  mutation DeleteEmployee($_id: ID!) {
+    deleteEmployeeByID(_id: $_id) {
       success
       message
     }

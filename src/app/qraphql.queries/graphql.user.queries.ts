@@ -1,8 +1,8 @@
 import { gql } from "apollo-angular"
 
 const LOGIN_USER = gql`
-  mutation Login($id: String!, $password: String!) {
-    userLogin(_id: $id, password: $password) {
+  mutation Login($_id: String!, $password: String!) {
+    userLogin(_id: $_id, password: $password) {
       _id
       email
       token
