@@ -1,5 +1,8 @@
+
+require('dotenv').config();
 const User = require('./models/User');
 const Employee = require('./models/Employee')
+const jwt = require('jsonwebtoken');
 
 const resolvers = {
     Query: {
@@ -20,7 +23,7 @@ const resolvers = {
                 throw new Error('Invalid credentials');
             }
 
-            const token = jwt.sign({ userId: user._id }, JWT_SECRET_KEY, { expiresIn: '24h' }); 
+            const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '24h' }); 
 
             return {
                 ...user.toJSON(), 
